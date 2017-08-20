@@ -1,5 +1,13 @@
 import javax.swing.SwingUtilities;
 
+/**
+ * Main
+ * ------
+ * Main class for VinylDownloader
+ *
+ * @author Dan Foad
+ * @version 1.0.0
+ */
 public class Main {
     public static void main(String[] args) {
         
