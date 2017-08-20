@@ -10,14 +10,16 @@ import java.awt.event.ComponentEvent;
 /**
  * JFrameMaximised
  * ---------------
+ * Circumvents bug wherein undecorated windows that are maximised
+ * cover the taskbar
+ *
  * @author Dan Foad
- * @version 1.0.0
+ * @version 1.2.0
  */
 public class JFrameMaximised extends JFrame {
     
-    // Max bounds of frame
-    private Rectangle maxBounds;
-    private Rectangle restoredBounds;
+    private Rectangle maxBounds; // Max bounds of frame
+    private Rectangle restoredBounds; // Regular bounds of frame
     
     /** JFrameMaximised::JFrameMaximised
      * Default constructor, initialise maxBounds as null
@@ -34,19 +36,28 @@ public class JFrameMaximised extends JFrame {
         super(title);
         maxBounds = null;
         
+        // Defaults for restored window
         restoredBounds = new Rectangle(0, 0, 1200, 800);
         
+        // Listen for movement/resize and store new bounds
         addComponentListener(new ComponentListener() {
+            @Override
             public void componentHidden(ComponentEvent e) {}
+            
+            @Override
             public void componentShown(ComponentEvent e) {}
             
+            @Override
             public void componentResized(ComponentEvent e) {
+                // If not maximised, store new bounds
                 if (getExtendedState() == JFrame.NORMAL) {
                     restoredBounds = getBounds();
                 }
             }
             
+            @Override
             public void componentMoved(ComponentEvent e) {
+                // If not maximised, store new bounds
                 if (getExtendedState() == JFrame.NORMAL) {
                     restoredBounds = getBounds();
                 }
@@ -71,6 +82,9 @@ public class JFrameMaximised extends JFrame {
         super.setMaximizedBounds(maxBounds);
     }
     
+    /** JFrameMaximised::setRestoredBounds
+     * Set window to use restored bounds
+     */
     public synchronized void setRestoredBounds() {
         setBounds(restoredBounds);
     }

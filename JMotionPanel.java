@@ -2,40 +2,56 @@ import javax.swing.JPanel;
 import javax.swing.JFrame;
 
 import java.awt.Point;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
-public class JMotionPanel extends JPanel{
-    private Point initialClick;
-    private JFrame parent;
+/**
+ * JMotionPanel
+ * ----------------
+ * JPanel derivative that allows moving containing frame by
+ * dragging on the JMotionPanel
+ *
+ * @author Dan Foad
+ * @version 1.0.0
+ */
+public class JMotionPanel extends JPanel {
+    
+    private Point initialClick; // Location of initial click of drag
+    private JFrame instance; // JFrame that contains the JMotionPanel
 
-    public JMotionPanel(final JFrame parent) {
-        this.parent = parent;
+    /** JMotionPanel
+     * Constructor to set parent instance and add listeners
+     * @param JFrame instance     Instance of containing JFrame
+     */
+    public JMotionPanel(JFrame instance) {
+        this.instance = instance;
 
+        // Catch initial click of the drag
         addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
+            public void mousePressed(MouseEvent evt) {
                 initialClick = e.getPoint();
-                getComponentAt(initialClick);
             }
         });
 
+        // Catch dragging motion and calculate frame movement
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
-            public void mouseDragged(MouseEvent e) {
+            public void mouseDragged(MouseEvent evt) {
 
-                // get location of Window
-                int thisX = parent.getLocation().x;
-                int thisY = parent.getLocation().y;
+                // Get current window location
+                int thisX = instance.getLocation().x;
+                int thisY = instance.getLocation().y;
 
-                // Determine how much the mouse moved since the initial click
+                // Get mouse delta since initial click
                 int xMoved = (thisX + e.getX()) - (thisX + initialClick.x);
                 int yMoved = (thisY + e.getY()) - (thisY + initialClick.y);
 
-                // Move window to this position
+                // Move window accordingly
                 int X = thisX + xMoved;
                 int Y = thisY + yMoved;
-                parent.setLocation(X, Y);
+                instance.setLocation(X, Y);
             }
         });
     }
