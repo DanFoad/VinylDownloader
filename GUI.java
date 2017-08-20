@@ -157,7 +157,7 @@ public class GUI extends JFrameMaximised {
      * Operations to be performed before exitting system
      */
     public void close() {
-        
+        System.out.println("Closing VinylDownloader..");
     }
     
 }

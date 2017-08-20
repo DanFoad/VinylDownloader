@@ -31,7 +31,7 @@ public class JMotionPanel extends JPanel {
         // Catch initial click of the drag
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent evt) {
-                initialClick = e.getPoint();
+                initialClick = evt.getPoint();
             }
         });
 
@@ -45,8 +45,8 @@ public class JMotionPanel extends JPanel {
                 int thisY = instance.getLocation().y;
 
                 // Get mouse delta since initial click
-                int xMoved = (thisX + e.getX()) - (thisX + initialClick.x);
-                int yMoved = (thisY + e.getY()) - (thisY + initialClick.y);
+                int xMoved = (thisX + evt.getX()) - (thisX + initialClick.x);
+                int yMoved = (thisY + evt.getY()) - (thisY + initialClick.y);
 
                 // Move window accordingly
                 int X = thisX + xMoved;
