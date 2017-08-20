@@ -2,8 +2,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JList;
 import javax.swing.ImageIcon;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.CompoundBorder;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -14,6 +20,7 @@ import java.awt.Toolkit;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Frame;
+import java.awt.Font;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -38,6 +45,7 @@ public class GUI extends JFrameMaximised {
     
     // Globals
     private JPanel mainPanel; // JFrame content pane
+    private JList<String> leftList; // Left sidebar list
     
     /** GUI
      * Constructor, set title and initialise GUI
@@ -128,13 +136,33 @@ public class GUI extends JFrameMaximised {
         c.weighty = 0.5; // Take vertical space
         
         // Setup left panel
-        JPanel leftPanel = new JPanel();
+        JPanel leftPanel = new JPanel(new BorderLayout());
         c.weightx = 0.2; // Take up 20% of width
         c.fill = GridBagConstraints.BOTH; // Take full height
         c.gridx = 0;
         c.gridy = 0;
         leftPanel.setOpaque(true);
-        leftPanel.setBackground(Color.BLUE);
+        leftPanel.setBackground(new Color(0xE0E0E0));
+        
+        JLabel leftTitle = new JLabel("SONG LIST");
+        leftTitle.setBackground(new Color(0, 0, 0, 0));
+        leftTitle.setBorder(new CompoundBorder(new MatteBorder(0, 0, 2, 0, new Color(0xCCCCCC)), new EmptyBorder(24, 16, 24, 0)));
+        leftTitle.setFont(new Font("Roboto", Font.BOLD, 22));
+        
+        leftList = new JList<>();
+        leftList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        leftList.setLayoutOrientation(JList.VERTICAL);
+        leftList.setCellRenderer(new JCustomListCellRenderer());
+        leftList.setVisibleRowCount(-1);
+        JScrollPane leftScrollPane = new JScrollPane(leftList);
+        leftScrollPane.setVerticalScrollBarPolicy(
+            JScrollPane.VERTICAL_SCROLLBAR_ALWAYS
+        );
+        leftScrollPane.getVerticalScrollBar().setUI(new JCustomScrollBarUI());
+        leftScrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
+        
+        leftPanel.add(leftTitle, BorderLayout.NORTH);
+        leftPanel.add(leftScrollPane, BorderLayout.CENTER);
         body.add(leftPanel, c);
         
         // Setup centre panel
@@ -159,6 +187,10 @@ public class GUI extends JFrameMaximised {
         
         // Add body to content pane
         mainPanel.add(body, BorderLayout.CENTER);
+    }
+    
+    public void setLeftListData(String[] data) {
+        leftList.setListData(data);
     }
     
     /** GUI::close

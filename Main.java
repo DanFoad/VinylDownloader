@@ -24,6 +24,11 @@ public class Main {
                     @Override
                     public void run() {
                         // ADD CODE
+                        String[] test = new String[100];
+                        for (int i = 0; i < 100; i++) {
+                            test[i] = "Line " + (i+1);
+                        }
+                        gui.setLeftListData(test);
                         
                         // Shutdown hook
                         Runtime.getRuntime().addShutdownHook(new Thread() {
