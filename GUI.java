@@ -18,10 +18,18 @@ import java.awt.Frame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+// https://github.com/DanFoad/JavaFunctions
+import danfoad.util.ui.JFrameMaximised;
+import danfoad.util.ui.JMotionPanel;
+import danfoad.util.ui.JTitlebarButton;
+
 /** 
  * GUI
  * -----
  * Main GUI object for window
+ *
+ * Requires danfoad.util
+ * https://github.com/DanFoad/JavaFunctions
  *
  * @author Dan Foad
  * @version 1.3.0
