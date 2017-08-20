@@ -1,4 +1,11 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Arrays;
+
 import javax.swing.SwingUtilities;
+
+import danfoad.util.FileUtil;
+import danfoad.util.FileUtil.CSVResult;
 
 /**
  * Main
@@ -23,12 +30,26 @@ public class Main {
                 final Runnable r = new Runnable() {
                     @Override
                     public void run() {
-                        // ADD CODE
-                        String[] test = new String[100];
-                        for (int i = 0; i < 100; i++) {
-                            test[i] = "Line " + (i+1);
+                        
+                        CSVResult result = FileUtil.readCSV("test.csv");
+                        ArrayList<HashMap<String, String>> data = result.getData();
+                        ArrayList<String> headers = result.getHeaders();
+                        ArrayList<String> listData = new ArrayList<String>();
+                        for (int i = 0; i < data.size(); i++) {
+                            String title = data.get(i).get(headers.get(0));
+                            String artist = data.get(i).get(headers.get(1));
+                            String featured = data.get(i).get(headers.get(2));
+                            
+                            String datum = artist + " - " + title;
+                            
+                            if (featured.length() != 0)
+                                datum = datum + " ft. " + featured;
+                            
+                            listData.add(datum);
                         }
-                        gui.setLeftListData(test);
+                        
+                        Object[] rawArray = listData.toArray();
+                        gui.setLeftListData(Arrays.copyOf(rawArray, rawArray.length, String[].class));
                         
                         // Shutdown hook
                         Runtime.getRuntime().addShutdownHook(new Thread() {

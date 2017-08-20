@@ -94,6 +94,11 @@ public class GUI extends JFrameMaximised {
         titlebar.setPreferredSize(new Dimension(mainPanel.getWidth(), 32));
         titlebar.setBackground(new Color(0xEFEFEF));
         
+        // Create and setup titlebar title
+        JLabel title = new JLabel(this.getTitle().toUpperCase());
+        title.setFont(new Font("Roboto", Font.PLAIN, 16));
+        title.setBorder(new EmptyBorder(8, 16, 8, 0));
+        
         // Create and setup titlebar buttons container
         JPanel titlebarButtons = new JPanel(new GridLayout(1, 3));
         titlebarButtons.setBackground(new Color(0xEFEFEF));
@@ -118,6 +123,7 @@ public class GUI extends JFrameMaximised {
         
         // Add components to their parents
         titlebar.add(titlebarButtons, BorderLayout.LINE_END);
+        titlebar.add(title, BorderLayout.LINE_START);
         mainPanel.add(titlebar, BorderLayout.NORTH);
     }
     
@@ -137,7 +143,7 @@ public class GUI extends JFrameMaximised {
         
         // Setup left panel
         JPanel leftPanel = new JPanel(new BorderLayout());
-        c.weightx = 0.2; // Take up 20% of width
+        c.weightx = 0.05; // Take up 20% of width
         c.fill = GridBagConstraints.BOTH; // Take full height
         c.gridx = 0;
         c.gridy = 0;
