@@ -80,28 +80,37 @@ public class GUI extends JFrameMaximised {
         JPanel body = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         body.setBackground(Color.WHITE);
+        body.setPreferredSize(new Dimension(mainPanel.getWidth(), mainPanel.getHeight()));
         
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
+        c.weightx = 0.2;
         c.weighty = 0.5;
         
-        JLabel label = new JLabel("testo");
-        c.fill = GridBagConstraints.HORIZONTAL;
+        JPanel leftPanel = new JPanel();
+        c.fill = GridBagConstraints.BOTH;
         c.gridx = 0;
         c.gridy = 0;
-        label.setOpaque(true);
-        label.setBackground(Color.BLUE);
-        body.add(label, c);
+        leftPanel.setOpaque(true);
+        leftPanel.setBackground(Color.BLUE);
+        body.add(leftPanel, c);
         
-        JLabel label2 = new JLabel("testo");
+        JPanel centrePanel = new JPanel();
+        c.weightx = 0.6;
         c.fill = GridBagConstraints.BOTH;
         c.gridx = 1;
         c.gridy = 0;
-        c.ipady = 30;
-        c.gridwidth = 3;
-        label2.setOpaque(true);
-        label2.setBackground(Color.BLACK);
-        body.add(label2, c);
+        centrePanel.setOpaque(true);
+        centrePanel.setBackground(Color.BLACK);
+        body.add(centrePanel, c);
+        
+        JPanel rightPanel = new JPanel();
+        c.weightx = 0.2;
+        c.fill = GridBagConstraints.BOTH;
+        c.gridx = 2;
+        c.gridy = 0;
+        rightPanel.setOpaque(true);
+        rightPanel.setBackground(Color.RED);
+        body.add(rightPanel, c);
         
         mainPanel.add(body, BorderLayout.CENTER);
     }

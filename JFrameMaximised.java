@@ -4,6 +4,9 @@ import java.awt.Rectangle;
 import java.awt.Frame;
 import java.awt.Insets;
 
+import java.awt.event.ComponentListener;
+import java.awt.event.ComponentEvent;
+
 /**
  * JFrameMaximised
  * ---------------
@@ -14,13 +17,13 @@ public class JFrameMaximised extends JFrame {
     
     // Max bounds of frame
     private Rectangle maxBounds;
+    private Rectangle restoredBounds;
     
     /** JFrameMaximised::JFrameMaximised
      * Default constructor, initialise maxBounds as null
      */
     public JFrameMaximised() {
-        super();
-        maxBounds = null;
+        this("");
     }
     
     /** JFrameMaximised::JFrameMaximised
@@ -30,6 +33,25 @@ public class JFrameMaximised extends JFrame {
     public JFrameMaximised(String title) {
         super(title);
         maxBounds = null;
+        
+        restoredBounds = new Rectangle(0, 0, 1200, 800);
+        
+        addComponentListener(new ComponentListener() {
+            public void componentHidden(ComponentEvent e) {}
+            public void componentShown(ComponentEvent e) {}
+            
+            public void componentResized(ComponentEvent e) {
+                if (getExtendedState() == JFrame.NORMAL) {
+                    restoredBounds = getBounds();
+                }
+            }
+            
+            public void componentMoved(ComponentEvent e) {
+                if (getExtendedState() == JFrame.NORMAL) {
+                    restoredBounds = getBounds();
+                }
+            }
+        });
     }
     
     /** JFrameMaximised::getMaximisedBounds
@@ -47,6 +69,10 @@ public class JFrameMaximised extends JFrame {
     public synchronized void setMaximisedBounds(Rectangle maxBounds) {
         this.maxBounds = maxBounds;
         super.setMaximizedBounds(maxBounds);
+    }
+    
+    public synchronized void setRestoredBounds() {
+        setBounds(restoredBounds);
     }
     
     /** JFrameMaximised::setExtendedState

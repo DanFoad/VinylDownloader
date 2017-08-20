@@ -83,6 +83,7 @@ public class JTitlebarButton extends JButton implements MouseListener {
                 break;
             case RESTORE:
                 instance.setExtendedState(instance.getExtendedState() | JFrame.NORMAL);
+                instance.setRestoredBounds();
                 this.action = MAXIMISE;
                 setImage("/img/maximise.png");
                 break;
