@@ -32,6 +32,7 @@ public class Main {
                     public void run() {
                         
                         CSVResult result = FileUtil.readCSV("test.csv");
+                        result.sort("Title");
                         ArrayList<HashMap<String, String>> data = result.getData();
                         ArrayList<String> headers = result.getHeaders();
                         ArrayList<String> listData = new ArrayList<String>();
@@ -47,7 +48,6 @@ public class Main {
                             
                             listData.add(datum);
                         }
-                        
                         Object[] rawArray = listData.toArray();
                         gui.setLeftListData(Arrays.copyOf(rawArray, rawArray.length, String[].class));
                         
